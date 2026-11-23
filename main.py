@@ -56,8 +56,10 @@ def main():
     try:
         from PIL import Image, ImageDraw, ImageFont
         import PIL
-    except Exception:
-        # No Pillow at all: stdlib-only red image.
+    except Exception as exc:
+        # No Pillow at all: stdlib-only red image. Log the import error
+        # so the harness run log says WHY it is missing, not just that.
+        print("PROBE: PIL import failed:", repr(exc))
         write_png(path, solid_rgb(176, 30, 36))
         print("PROBE: PIL missing -> RED")
         return 0
